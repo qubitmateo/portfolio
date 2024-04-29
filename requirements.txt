@@ -1,1 +1,4 @@
 Django==5.0.4
+Error a prorposito
+
+# Prueba
