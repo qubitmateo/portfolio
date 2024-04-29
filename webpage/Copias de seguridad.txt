@@ -1,0 +1,71 @@
+// Shader funcional con cambio de color azul, falta el cambio de color del fondo//
+
+   <script type="x-shader/x-fragment" id="fragShader">
+        precision mediump float; // Precisión del punto flotante
+    
+        varying vec2 vUv; // Coordenada UV del fragmento interpolada desde el vértice
+        uniform vec2 u_resolution; // Resolución de la pantalla
+        uniform float u_progress; // Progreso de la animación
+        uniform float u_time; // Tiempo de ejecución
+    
+        // Función para generar un valor de ruido pseudoaleatorio
+        float rand(vec2 n) {
+            return fract(cos(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+        }
+        
+        // Función de ruido basada en el algoritmo de Perlin
+        float noise(vec2 n) {
+            const vec2 d = vec2(0., 1.);
+            vec2 b = floor(n), f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
+            return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+        }
+        
+        // Función de ruido fractal para generar detalles
+        float fbm(vec2 n) {
+            float total = 0.0, amplitude = .4;
+            for (int i = 0; i < 4; i++) {
+                total += noise(n) * amplitude;
+                n += n;
+                amplitude *= 0.6;
+            }
+            return total;
+        }
+    
+        void main() {
+            vec2 uv = vUv; // Coordenada UV
+            uv.x *= min(1., u_resolution.x / u_resolution.y); // Ajuste de la coordenada UV según la resolución
+            uv.y *= min(1., u_resolution.y / u_resolution.x);
+    
+            float t = u_progress; // Progreso de la animación
+            vec3 color = vec3(1, 0.5, 0.95); // Color base del fondo
+
+            vec3 paper_color = vec3(0.8, 0.8, 0.7); // Color del papel, puedes ajustarlo según tus preferencias
+
+    
+            // Calcula un valor de ruido principal para el fondo
+            float main_noise = 1. - fbm(.75 * uv + 10. - vec2(.3, .9 * t));
+            
+            // Calcula la oscuridad del papel en función del ruido principal y el progreso de la animación
+            float paper_darkness = smoothstep(main_noise - .1, main_noise, t);
+            vec3 adjusted_color = color - paper_color * paper_darkness; // Ajusta el color del fondo
+            color = adjusted_color;
+    
+            // Calcula un color de fuego en función del ruido y el tiempo
+            vec3 fire_color = fbm(6. * uv - vec2(0., .05 * u_time)) * vec3(0.2, 0.0, 0.8) * 2.0;
+            
+            // Calcula la visibilidad del fuego en función de diferentes umbrales de ruido
+            float show_fire = smoothstep(.4, .9, fbm(10. * uv + 2. - vec2(0., .005 * u_time)));
+            show_fire += smoothstep(.7, .8, fbm(.5 * uv + 5. - vec2(0., .001 * u_time)));
+            
+            // Define el borde y la intensidad del fuego
+            float fire_border = .02 * show_fire;
+            float fire_edge = smoothstep(main_noise - fire_border, main_noise - .5 * fire_border, t);
+            fire_edge *= (1. - smoothstep(main_noise - .5 * fire_border, main_noise, t));
+            color += fire_color * fire_edge; // Mezcla el color del fuego con el fondo
+    
+            // Calcula la opacidad del fragmento en función del ruido principal
+            float opacity = 1. - smoothstep(main_noise - 0.0001, main_noise, t);
+    
+            gl_FragColor = vec4(color, opacity); // Asigna el color y la opacidad al fragmento
+        }
+    </script>

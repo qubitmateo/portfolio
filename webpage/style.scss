@@ -1,0 +1,564 @@
+@charset "UTF-8";
+
+// Variables de Color para Toda la Pagina
+:root {
+    --color-texto-scroll: rgb(255, 255, 255);
+    --color-texto-general: black;
+    --color-fondo: black;
+    --menu-color: black;
+    --menu-icono-color: black;
+    --color-galeria-texto: black;
+
+}
+
+*{box-sizing: border-box;}
+
+@font-face {
+    font-family: 'Blacksword' ;
+    src: url('Fonts/Blacksword.otf') format('opentype') ;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 20px;
+    color: #1eff00;
+    overflow-x: hidden;
+    // overflow-y: hidden;
+}
+
+body {
+    background-color: transparent
+
+}
+
+a {
+    color: inherit;
+}
+
+.page {
+    width: 100%;
+    min-height: 180vh;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+}
+
+.page .header {
+    color: #03A9F4;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding-top: 80vh;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.page .content {
+    max-width: 800px;
+    padding: 10px;
+}
+
+
+ .page ::-moz-selection {  /* Se utiliza para el mozilla firefox */
+    background: #61b4e0;
+}
+
+.page ::selection {
+    background: #c9acff;
+}
+
+.scroll-msg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+	 padding-top: 2em;
+    z-index: 20;
+}
+
+.scroll-msg > div:nth-child(1) {
+    margin-top: -10vh;
+    padding-bottom: 1em;
+    font-size: 4em;
+    font-family: 'Blacksword', Blacksword
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+    .scroll-msg > div:nth-child(1) {
+        font-size: 3em;
+    }
+
+    .header {
+        font-size: 5px;
+    }
+}
+
+.ColorTexto {
+    color: var(--color-texto-scroll) ;
+}
+
+.TextoGrandeInicio{
+    margin-top: -5vh;
+    padding-bottom: 1em;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+
+
+canvas#fire-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+
+}
+
+.arrow-animated {
+    font-size: 1em;
+    animation: arrow-float 1s infinite;
+}
+
+@keyframes arrow-float {
+    0% {
+        transform: translateY(0);
+        animation-timing-function: ease-out;
+    }
+    60% {
+        transform: translateY(50%);
+        animation-timing-function: ease-in-out;
+    }
+    100% {
+        transform: translateY(0);
+        animation-timing-function: ease-out;
+    }
+}
+
+/* Menu Hamburguesa Estilo Inicio */
+
+
+.HamburguesaMenu {
+    z-index: 30;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
+@keyframes checked-anim {
+    50% {
+        width: 3000px;
+        height: 3000px;
+    }
+    100% {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+}
+@keyframes not-checked-anim {
+    0% {
+        width: 3000px;
+        height: 3000px;
+    }
+}
+.menu-item, .menu-link {
+    margin: 75px 0 -55px 0;
+    color: var(--menu-color);
+    font: 14pt "Roboto", sans-serif;
+    font-weight: 700;
+    line-height: 1.8;
+    text-decoration: none;
+    text-transform: none;
+    list-style: none;
+    outline: 0;
+    display: none;
+    z-index: 25;
+    }
+.menu-item {
+    width: 230px;
+    text-indent: 56px;
+    z-index: 26;
+}
+.menu-link:focus {
+    display: block;
+    color: #333;
+    background-color: #eee;
+    transition: all .5s;
+}
+
+#trigger, #burger, #burger:before, #burger:after {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background: var(--menu-icono-color);
+    width: 30px;
+    height: 5px;
+    transition: .2s ease;
+    cursor: pointer;
+    z-index: 27;
+}
+#trigger {
+    height: 25px;
+    background: none;
+}
+#burger:before {
+    content: " ";
+    top: 10px;
+    left: 0;
+}
+#burger:after {
+    content: " ";
+    top: 20px;
+    left: 0;
+}
+#menu-toggle:checked + #trigger + #burger {
+    top: 35px;
+    transform: rotate(180deg);
+    transition: transform .2s ease;
+    z-index: 26;
+}
+
+#menu-toggle:checked + #trigger + #burger:before {
+    width: 20px;
+    top: -2px;
+    left: 18px;
+    transform: rotate(45deg) translateX(-5px);
+    transition: transform .2s ease;
+    z-index: 26;
+}
+#menu-toggle:checked + #trigger + #burger:after {
+    width: 20px;
+    top: 2px;
+    left: 18px;
+    transform: rotate(-45deg) translateX(-5px);
+    transition: transform .2s ease;
+    z-index: 26;
+}
+#menu {
+    position: absolute;
+    margin: 0; padding: 0;
+    width: 110px;
+    height: 110px;
+    background-color: #fff;
+    border-bottom-right-radius: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    animation: not-checked-anim .2s both;
+    transition: .2s;
+    z-index: 24;
+}
+#menu-toggle:checked + #trigger + #burger + #menu {
+    animation: checked-anim 1s ease both;
+}
+#menu-toggle:checked + #trigger ~ #menu > .menu-item, .menu-link {
+    display: block;
+}
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    display: none;
+}
+/* Fin del menu Hamburguesa Estilo */
+
+
+/* Fondo de Olas */
+
+@keyframes move_wave {
+    0% {
+        transform: translateX(0) translateZ(0) scaleY(1)
+    }
+    50% {
+        transform: translateX(-25%) translateZ(0) scaleY(0.55)
+    }
+    100% {
+        transform: translateX(-50%) translateZ(0) scaleY(1)
+    }
+}
+.waveWrapper {
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    height: 100%;
+    z-index: -12;
+
+}
+.waveWrapperInner {
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    bottom: -1px;
+    background-color: transparent;
+    // background-image: linear-gradient(to top, #4f2768 20%, #0d0d2b 80%);
+}
+.bgTop {
+    z-index: -5;
+    opacity: 0.5;
+}
+.bgMiddle {
+    z-index: -10;
+    opacity: 0.75;
+}
+.bgBottom {
+    z-index: -15;
+}
+.wave {
+    position: absolute;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat no-repeat;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+}
+.waveTop {
+    background-size: 50% 100px;
+}
+.waveAnimation .waveTop {
+  animation: move-wave 3s;
+   -webkit-animation: move-wave 3s;
+   -webkit-animation-delay: 1s;
+   animation-delay: 1s;
+}
+.waveMiddle {
+    background-size: 50% 120px;
+}
+.waveAnimation .waveMiddle {
+    animation: move_wave 10s linear infinite;
+}
+.waveBottom {
+    background-size: 50% 100px;
+}
+.waveAnimation .waveBottom {
+    animation: move_wave 15s linear infinite;
+}
+
+/* fin de fondo de olas */
+
+// Galeria Portfolio
+
+ /* Center website */
+ .main {
+    max-width: 1000px;
+    margin: auto;
+  }
+  
+  h1 {
+    font-size: 50px;
+    word-break: break-all;
+  }
+  
+  .row {
+    margin: 8px -16px;
+    z-index: 200s;
+    width: 100vh;
+  }
+  
+  /* Add padding BETWEEN each column (if you want) */
+  .row,
+  .row > .column {
+    padding: 8px;
+  }
+  
+  /* Create three equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 33.33%; //Canbiar tamaño
+    display: none; /* Hide columns by default */
+  }
+  
+  /* Clear floats after rows */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Content */
+  .content {
+    background-color: transparent;
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1); /* Sombra */
+    backdrop-filter: blur(50px); /* Aplicar desenfoque */
+    border-radius: 5%;
+    
+  }
+
+  .gifgaleria {
+    border-radius: 5%;
+    width: 50%;
+    height: 50%;
+}
+  /* The "show" class is added to the filtered elements */
+  .show {
+    display: block;
+  }
+  
+  /* Style the buttons */
+  .btn {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: white;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  /* Add a grey background color on mouse-over */
+  .btn:hover {
+    background-color: #ddd;
+  }
+  
+  /* Add a dark background color to the active button */
+  .btn.active {
+    background-color: #666;
+     color: white;
+  }
+
+
+  .caja {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Alinea verticalmente el contenido */
+    width: 80%;
+    height: 80%;
+    background-color: transparent;
+    border-radius: 20px; /* Redondear las esquinas */
+    padding: 20px;
+    margin: 50px auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra */
+    backdrop-filter: blur(50px); /* Aplicar desenfoque */
+}
+
+
+// Clase de reinicio de Estilo
+
+.Reset-Styles {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+    outline: none;
+    
+}
+
+//Color de fondo, independiente de las olas
+
+.background-1 { 
+    background: #092756;
+     background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top, rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg, #670d10 0%, #092756 100%);
+     background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg, #670d10 0%,#092756 100%);
+     background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg, #670d10 0%,#092756 100%);
+     background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg, #670d10 0%,#092756 100%);
+     background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg, #670d10 0%,#092756 100%);
+    }
+
+    .gradienteanimado {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+    background: rgb(73,18,107);
+    background: linear-gradient(45deg, rgba(73,18,107,1) 2%, rgba(107,80,149,1) 13%, rgba(106,37,215,1) 25%, rgba(30,18,71,1) 41%, rgba(98,83,129,1) 56%, rgba(89,15,204,1) 72%, rgba(46,32,63,1) 86%, rgba(255,0,0,1) 100%);
+        background-size: 600% 100%;
+        animation: gradient 16s linear infinite;
+        animation-direction: alternate;
+        z-index: -20;
+        opacity: 0.5;
+    }
+    @keyframes gradient {
+        0% {background-position: 0%}
+        100% {background-position: 100%}
+    }
+
+    .imagen-de-luces {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */ /* Ajusta la opacidad de la imagen según sea necesario */
+        z-index: -30
+        ; /* Asegura que la imagen esté detrás del gradiente */
+    }
+
+    // Fin del fondo
+
+   .SeccionesPag {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; /* Alinea verticalmente el contenido */
+        width: 80%;
+        height: 80%;
+        cursor: default;
+    }
+
+    //Seperador entre sections
+
+    .seperator-wrapper {
+        width: 100%;  
+        .seperator {
+          width: 3000px;
+          height: 5px;
+          animation: rotate 3s infinite linear;
+          -webkit-animation: rotate 3s infinite linear;
+        }
+        z-index: 10044;
+      }
+      
+      @-webkit-keyframes rotate {
+        from {
+          background-position: -3000px;
+        }
+        to { 
+          background-position: 0px;
+        }
+      }
+      
+      @keyframes rotate {
+        from {
+          background-position: -3000px;
+        }
+        to { 
+          background-position: 0px;
+        }
+      }
+      
+      .gradient {
+        background: rgb(48,255,144); /* Old browsers */
+      background: -moz-linear-gradient(left,  rgba(48,255,144,1) 0%, rgba(237,45,237,1) 25%, rgba(201,152,38,1) 50%, rgba(48,255,230,1) 75%, rgba(48,255,144,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(48,255,144,1)), color-stop(25%,rgba(237,45,237,1)), color-stop(50%,rgba(201,152,38,1)), color-stop(75%,rgba(48,255,230,1)), color-stop(100%,rgba(48,255,144,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(left,  rgba(48,255,144,1) 0%,rgba(237,45,237,1) 25%,rgba(201,152,38,1) 50%,rgba(48,255,230,1) 75%,rgba(48,255,144,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(left,  rgba(48,255,144,1) 0%,rgba(237,45,237,1) 25%,rgba(201,152,38,1) 50%,rgba(48,255,230,1) 75%,rgba(48,255,144,1) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(left,  rgba(48,255,144,1) 0%,rgba(237,45,237,1) 25%,rgba(201,152,38,1) 50%,rgba(48,255,230,1) 75%,rgba(48,255,144,1) 100%); /* IE10+ */
+      background: linear-gradient(to right,  rgba(48,255,144,1) 0%,rgba(237,45,237,1) 25%,rgba(201,152,38,1) 50%,rgba(48,255,230,1) 75%,rgba(48,255,144,1) 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#30ff90', endColorstr='#30ff90',GradientType=1 ); /* IE6-9 */
+      
+      }
